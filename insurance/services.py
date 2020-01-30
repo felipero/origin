@@ -60,7 +60,7 @@ class RiskCalculator:
         if "income" not in profile_data or float(profile_data["income"]) <= 0:
             lines_score["disability"] = "ineligible"
         elif float(profile_data["income"]) > 200000:
-            lines_score = {line: score - 1 for line, score in lines_score.items()}
+            lines_score.update({line: score - 1 for line, score in lines_score.items()})
 
     def __consider_house_mortage(self, lines_score, profile_data):
         if "house" not in profile_data:
