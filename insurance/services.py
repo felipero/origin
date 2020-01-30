@@ -34,7 +34,7 @@ class RiskCalculator:
         return base_score
 
     def __consider_dependents(self, lines_score, profile_data):
-        if int(profile_data["dependents"]) >= 1:
+        if "dependents" in profile_data and int(profile_data["dependents"]) >= 1:
             lines_score.update(
                 {
                     line: score + 1
@@ -44,7 +44,10 @@ class RiskCalculator:
             )
 
     def __consider_marital_status(self, lines_score, profile_data):
-        if profile_data["marital_status"] == "married":
+        if (
+            "marital_status" in profile_data
+            and profile_data["marital_status"] == "married"
+        ):
             lines_score["life"] += 1
             lines_score["disability"] += 1
 
@@ -75,7 +78,7 @@ class RiskCalculator:
             )
 
     def __consider_senior_age(self, lines_score, profile_data):
-        if int(profile_data["age"]) > 60:
+        if "age" in profile_data and int(profile_data["age"]) > 60:
             lines_score["life"] = "ineligible"
             lines_score["disability"] = "ineligible"
 

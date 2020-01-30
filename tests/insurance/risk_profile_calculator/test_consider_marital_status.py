@@ -34,7 +34,7 @@ def test__consider_marital_status_eq_single(calculator, lines_score):
     }
 
 
-def test__consider_marital_status_inexisting(calculator, lines_score):
+def test__consider_marital_status_inexistent(calculator, lines_score):
     profile_data = {
         "age": 51,
         "dependents": -2,
