@@ -1,9 +1,4 @@
-from insurance.services import RiskCalculator
-
-calculator = RiskCalculator()
-
-
-def test_calculate_score():
+def test_calculate_score(calculator):
 
     profile_data = {
         "age": 35,
@@ -24,7 +19,7 @@ def test_calculate_score():
     assert calculator.calculate_score(profile_data) == risk_profile
 
 
-def test_calculate_score_with_age_eq_60():
+def test__consider_senior_age_with_age_eq_60(calculator, lines_score):
     profile_data = {
         "age": 60,
         "dependents": 2,
@@ -44,7 +39,7 @@ def test_calculate_score_with_age_eq_60():
     assert calculator.calculate_score(profile_data) == risk_profile
 
 
-def test_calculate_score_with_age_gt_60(client):
+def test_calculate_score_with_age_gt_60(calculator):
     profile_data = {
         "age": 61,
         "dependents": 2,
@@ -55,7 +50,6 @@ def test_calculate_score_with_age_gt_60(client):
         "vehicle": {"year": 2018},
     }
 
-    response = client.post("/risk/profile/", profile_data, "application/json")
     risk_profile = {
         "auto": "regular",
         "disability": "ineligible",
@@ -65,7 +59,7 @@ def test_calculate_score_with_age_gt_60(client):
     assert calculator.calculate_score(profile_data) == risk_profile
 
 
-def test_calculate_score_with_age_lt_30(client):
+def test_calculate_score_with_age_lt_30(calculator):
     profile_data = {
         "age": 28,
         "dependents": 0,
@@ -85,7 +79,7 @@ def test_calculate_score_with_age_lt_30(client):
     assert calculator.calculate_score(profile_data) == risk_profile
 
 
-def test_calculate_score_with_no_income(client):
+def test_calculate_score_with_no_income(calculator):
     profile_data = {
         "age": 28,
         "dependents": 0,
@@ -105,7 +99,7 @@ def test_calculate_score_with_no_income(client):
     assert calculator.calculate_score(profile_data) == risk_profile
 
 
-def test_calculate_score_with_no_house_nor_vehicle(client):
+def test_calculate_score_with_no_house_nor_vehicle(calculator):
     profile_data = {
         "age": 31,
         "dependents": 2,
